@@ -10,4 +10,3 @@ class NModuleBuilder(NGenericBuilder):
     def args_generic_iter(self):
         yield from super().args_generic_iter()
         yield '--module'
-

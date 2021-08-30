@@ -12,4 +12,3 @@ class NExecutableBuilder(NGenericBuilder):
         executables = self.config['executables']
         self.other_modules = self.config['modules']
         self.current_entry = executables[self.current_name]
-

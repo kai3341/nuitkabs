@@ -1,2 +1,1 @@
-from .nbuilder import NBuilder
-
+from .nbuilder import NBuilder  # noqa

@@ -1,7 +1,6 @@
-from yaml import load
+from yaml import load  # noqa
 
 try:
-    from yaml import CLoader as Loader
+    from yaml import CLoader as Loader  # noqa
 except ImportError:
-    from yaml import Loader
-
+    from yaml import Loader  # noqa

@@ -70,4 +70,3 @@ class NGenericBuilder:
                         yield '--%s=%s' % (key, module_name)
 
         yield self.current_name
-

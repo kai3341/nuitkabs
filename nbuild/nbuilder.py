@@ -46,4 +46,3 @@ class NBuilder:
     def execute(cls):
         self = cls()
         self.main()
-
