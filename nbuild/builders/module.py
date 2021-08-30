@@ -1,12 +1,13 @@
+from typing import Generator
 from .generic import NGenericBuilder
 
 
 class NModuleBuilder(NGenericBuilder):
-    def prepare_data(self):
+    def prepare_data(self) -> None:
         modules = self.config['modules']
         self.other_modules = modules.copy()
         self.current_entry = self.other_modules.pop(self.current_name)
 
-    def args_generic_iter(self):
+    def args_generic_iter(self) -> Generator[str]:
         yield from super().args_generic_iter()
         yield '--module'

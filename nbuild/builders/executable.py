@@ -8,7 +8,7 @@ class NExecutableBuilder(NGenericBuilder):
         'include-data-dir',
     )
 
-    def prepare_data(self):
+    def prepare_data(self) -> None:
         executables = self.config['executables']
         self.other_modules = self.config['modules']
         self.current_entry = executables[self.current_name]

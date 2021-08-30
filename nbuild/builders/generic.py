@@ -1,5 +1,6 @@
 import sys
 import subprocess
+from typing import Generator, Tuple
 
 
 class NGenericBuilder:
@@ -8,20 +9,20 @@ class NGenericBuilder:
         'nofollow-import-to',
     )
 
-    def __init__(self, config, current_name):
+    def __init__(self, config, current_name) -> None:
         self.config = config
         self.current_name = current_name
 
-    def run(self):
+    def run(self) -> None:
         args = self.args()
         subprocess.run(args)
 
     @classmethod
-    def execute(cls, config, current_name):
+    def execute(cls, config, current_name) -> None:
         self = cls(config, current_name)
         self.run()
 
-    def args_generic_iter(self):
+    def args_generic_iter(self) -> Generator[str]:
         yield sys.executable
         yield '-m'
         yield 'nuitka'
@@ -37,17 +38,17 @@ class NGenericBuilder:
 
         yield '--follow-imports'
 
-    def args(self):
+    def args(self) -> Tuple[str]:
         self.prepare_data()
         args = self.args_iter()
         return tuple(args)
 
-    def args_handler__dict_iter(self, entry):
+    def args_handler__dict_iter(self, entry) -> Generator[str]:
         for key, values in entry.items():
             for value in values:
                 yield '--%s=%s' % (key, value)
 
-    def args_handler__string_iter(self, entry):
+    def args_handler__string_iter(self, entry) -> Generator[str]:
         yield '--%s' % entry
 
     args_handler_switch = {
@@ -55,7 +56,7 @@ class NGenericBuilder:
         dict: args_handler__dict_iter,
     }
 
-    def args_iter(self):
+    def args_iter(self) -> Generator[str]:
         yield from self.args_generic_iter()
 
         for other_module in self.other_modules:

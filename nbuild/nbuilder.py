@@ -10,14 +10,14 @@ from .builders import (
 class NBuilder:
     default_config_name = 'nbuild.yaml'
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         self.config_name = kwargs.get('config_name', self.default_config_name)
 
-    def load_config(self):
+    def load_config(self) -> None:
         with open(self.config_name) as config_stream:
             self.config = load(config_stream, Loader=Loader)
 
-    def handle_entry(self, section_name: str, builder: NGenericBuilder):
+    def handle_entry(self, section_name: str, builder: NGenericBuilder) -> None:
         entries = self.config.get(section_name)
 
         if not entries:
@@ -34,15 +34,15 @@ class NBuilder:
         ('executables', NExecutableBuilder),
     )
 
-    def build(self):
+    def build(self) -> None:
         for section_name, builder in self.handlers:
             self.handle_entry(section_name, builder)
 
-    def main(self):
+    def main(self) -> None:
         self.load_config()
         self.build()
 
     @classmethod
-    def execute(cls):
+    def execute(cls) -> None:
         self = cls()
         self.main()
