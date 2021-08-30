@@ -9,7 +9,7 @@ packages = setuptools.find_packages(
 
 entry_points = {
     'console_scripts': (
-        'nbuild=nbuild:__main__'
+        'nbuild=nbuild:NBuilder.execute'
     ),
 }
 
