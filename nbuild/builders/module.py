@@ -1,4 +1,4 @@
-from typing import Generator
+from typing import Iterator
 from .generic import NGenericBuilder
 
 
@@ -8,6 +8,6 @@ class NModuleBuilder(NGenericBuilder):
         self.other_modules = modules.copy()
         self.current_entry = self.other_modules.pop(self.current_name)
 
-    def args_generic_iter(self) -> Generator[str, None, None]:
+    def args_generic_iter(self) -> Iterator[str]:
         yield from super().args_generic_iter()
         yield '--module'

@@ -1,20 +1,18 @@
 import sys
 import subprocess
 
-from typing import (
-    Callable,
-    Generator,
-    Tuple,
-    Dict,
-    Type,
-    Any,
-)
+from typing import Iterator, Tuple
+
+from .arg_processor import arg_processor
+from .package_finder import PackageFinder
 
 
 class NGenericBuilder:
     __entry_keys__: Tuple[str, ...] = (
         'follow-import-to',
         'nofollow-import-to',
+        'include-module',
+        'include-package',
     )
 
     def __init__(self, config, current_name) -> None:
@@ -24,51 +22,43 @@ class NGenericBuilder:
     def prepare_data(self) -> None:
         self.other_modules: dict
         self.current_entry: dict
-
+        
     def run(self) -> None:
         args = self.args()
-        subprocess.run(args)
+        completed = subprocess.run(args)
+        returncode = completed.returncode
+
+        if returncode != 0:
+            print("NBuild failed", args, file=sys.stderr)
+            sys.exit(returncode)
 
     @classmethod
     def execute(cls, config, current_name) -> None:
         self = cls(config, current_name)
         self.run()
 
-    def args_generic_iter(self) -> Generator[str, None, None]:
+    def args_generic_iter(self) -> Iterator[str]:
         yield sys.executable
         yield '-m'
         yield 'nuitka'
 
         generic = self.config.get('generic')
-        if not generic:
-            return
-
-        for entry in generic:
-            entry_type = type(entry)
-            entry_handler: Callable = self.args_handler_switch[entry_type]
-            yield from entry_handler(self, entry)
-
-        yield '--follow-imports'
+        if generic:
+            yield from self.args_handler___iter(generic)
 
     def args(self) -> Tuple[str, ...]:
         self.prepare_data()
         args = self.args_iter()
         return tuple(args)
 
-    def args_handler__dict_iter(self, entry) -> Generator[str, None, None]:
-        for key, values in entry.items():
-            for value in values:
-                yield '--%s=%s' % (key, value)
+    def args_handler___iter(self, entry) -> Iterator[str]:
+        for key, value in entry.items():
+            yield from arg_processor(value, key)
 
-    def args_handler__string_iter(self, entry) -> Generator[str, None, None]:
-        yield '--%s' % entry
+    def args_iter(self) -> Iterator[str]:
+        # Pre-calculate file or module name
+        canonical_name = PackageFinder.execute(self.current_name)
 
-    args_handler_switch: Dict[Type[Any], Callable] = {
-        str: args_handler__string_iter,
-        dict: args_handler__dict_iter,
-    }
-
-    def args_iter(self) -> Generator[str, None, None]:
         yield from self.args_generic_iter()
 
         for other_module in self.other_modules:
@@ -82,4 +72,4 @@ class NGenericBuilder:
                     for module_name in modules:
                         yield '--%s=%s' % (key, module_name)
 
-        yield self.current_name
+        yield canonical_name
