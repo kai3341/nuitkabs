@@ -2,7 +2,7 @@ from .generic import NGenericBuilder
 
 
 class NExecutableBuilder(NGenericBuilder):
-    __entry_keys__ = NGenericBuilder.__entry_keys__ + (
+    __entry_keys__ =  NGenericBuilder.__entry_keys__ + (
         'include-package-data',
         'include-data-file',
         'include-data-dir',

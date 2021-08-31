@@ -8,6 +8,6 @@ class NModuleBuilder(NGenericBuilder):
         self.other_modules = modules.copy()
         self.current_entry = self.other_modules.pop(self.current_name)
 
-    def args_generic_iter(self) -> Generator[str]:
+    def args_generic_iter(self) -> Generator[str, None, None]:
         yield from super().args_generic_iter()
         yield '--module'

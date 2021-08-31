@@ -1,4 +1,5 @@
-from .yaml_compat import load, Loader
+from typing import Type
+from .yaml_compat import load_yaml
 
 from .builders import (
     NGenericBuilder,
@@ -15,9 +16,13 @@ class NBuilder:
 
     def load_config(self) -> None:
         with open(self.config_name) as config_stream:
-            self.config = load(config_stream, Loader=Loader)
+            self.config = load_yaml(config_stream)
 
-    def handle_entry(self, section_name: str, builder: NGenericBuilder) -> None:
+    def handle_entry(
+        self, section_name: str,
+        builder: Type[NGenericBuilder],
+    ) -> None:
+
         entries = self.config.get(section_name)
 
         if not entries:
