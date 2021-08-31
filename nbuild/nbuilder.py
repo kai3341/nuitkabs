@@ -1,4 +1,6 @@
+from os import getenv
 from typing import Type
+
 from .yaml_compat import load_yaml
 
 from .builders import (
@@ -39,9 +41,32 @@ class NBuilder:
         ('executables', NExecutableBuilder),
     )
 
-    def build(self) -> None:
+    handler_dict = dict(handlers)
+
+    def build_all(self) -> None:
         for section_name, builder in self.handlers:
             self.handle_entry(section_name, builder)
+
+    def build_one(self, section_name) -> None:
+        builder = self.handler_dict[section_name]
+
+        entry_name = getenv('ENTRY_NAME')
+
+        if entry_name:
+            builder.execute(
+                self.config,
+                entry_name,
+            )
+        else:
+            self.handle_entry(section_name, builder)
+
+    def build(self) -> None:
+        section_name = getenv('SECTION_NAME')
+
+        if section_name:
+            self.build_one(section_name)
+        else:
+            self.build_all()
 
     def main(self) -> None:
         self.load_config()
