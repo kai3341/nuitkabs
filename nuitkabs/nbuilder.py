@@ -11,7 +11,7 @@ from .builders import (
 
 
 class NBuilder:
-    default_config_name = 'nbuild.yaml'
+    default_config_name = 'nuitkabs.yaml'
 
     def __init__(self, **kwargs) -> None:
         self.config_name = kwargs.get('config_name', self.default_config_name)

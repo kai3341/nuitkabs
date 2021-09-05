@@ -29,7 +29,7 @@ class NGenericBuilder:
         returncode = completed.returncode
 
         if returncode != 0:
-            print("NBuild failed", args, file=sys.stderr)
+            print("NuitkaBS failed", args, file=sys.stderr)
             sys.exit(returncode)
 
     @classmethod
