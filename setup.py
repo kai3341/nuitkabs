@@ -9,7 +9,7 @@ packages = setuptools.find_packages(
 
 entry_points = {
     'console_scripts': (
-        'nbuild=nbuild:NBuilder.execute'
+        'nuitkabs=nuitkabs:NBuilder.execute'
     ),
 }
 
@@ -40,10 +40,10 @@ install_requires = (
 )
 
 setuptools.setup(
-    name='nbuild',
+    name='nuitkabs',
     version='0.0.1',
     description='Nuitka build system',
-    url='https://github.com/kai3341/nbuild',
+    url='https://github.com/kai3341/nuitkabs',
     author='kai3341',
     author_email='noreplay@example.com',
     license='GNU GPL v3',
