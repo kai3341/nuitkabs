@@ -1,4 +1,4 @@
-# nbuild
+# NuitkaBS
 Nuitka build system
 
 # Why? What the reason of this project?
@@ -22,12 +22,12 @@ all commands again, adding `--nofollow-import-to=my_new_module`. If you added
 any module, you have to rewrite all these commands again. And again...
 
 ## Сonclusion
-NBuild helps you to create really large number of build commands via simple to
+NuitkaBS helps you to create really large number of build commands via simple to
 read, undarstand and edit `YAML` config
 
 # Installing
 ```
-pip install -U nbuild
+pip install -U nuitkabs
 ```
 
 # Pre-requirements
@@ -36,8 +36,8 @@ You should know nuitka generate C-files and then compile it via `gcc` or
 headers. It will be good if you install `ccache`
 
 # Usage
-NBuild is really thin wrapper over Nuitka. The first thing you have to create
-`nbuild.yaml` file in root of your project. The most keys you see in `YAML`
+NuitkaBS is really thin wrapper over Nuitka. The first thing you have to create
+`nuitkabs.yaml` file in root of your project. The most keys you see in `YAML`
 config you can find in nuitka documentation. Example:
 
 ```
