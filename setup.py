@@ -7,6 +7,19 @@ packages = setuptools.find_packages(
     where='.',
 )
 
+with open('README.md') as readme_file:
+    readme = readme_file.read()
+    readme = readme.strip()
+
+with open('HISTORY.md') as history_file:
+    history = history_file.read()
+    history = history.strip()
+
+long_description = '\n\n'.join((
+    readme,
+    history,
+))
+
 entry_points = {
     'console_scripts': (
         'nuitkabs=nuitkabs:NBuilder.execute'
@@ -41,7 +54,7 @@ install_requires = (
 
 setuptools.setup(
     name='nuitkabs',
-    version='0.0.1',
+    version='0.0.2',
     description='Nuitka build system',
     url='https://github.com/kai3341/nuitkabs',
     author='kai3341',
@@ -52,4 +65,6 @@ setuptools.setup(
     classifiers=classifiers,
     keywords=keywords,
     install_requires=install_requires,
+    long_description=long_description,
+    long_description_content_type='text/markdown',
 )
